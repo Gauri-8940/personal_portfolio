@@ -118,14 +118,16 @@ const Experience = () => {
                       item
                       xs={0}
                       md={5}
-                      sx={{ display: { xs: "none", md: "grid" } }}
+                      sx={{ display: { xs: "none", md: "flex" }, alignItems: "stretch" }}
                     >
                       {index % 2 === 0 ? (
-                        <Box sx={{ textAlign: "right", pr: 4 }}>
-                          <ExperienceCard experience={exp} />
+                        <Box sx={{ textAlign: "right", pr: 4, display: "flex", width: "100%", justifyContent: "flex-end" }}>
+                          <Box sx={{ width: "100%" }}>
+                            <ExperienceCard experience={exp} />
+                          </Box>
                         </Box>
                       ) : (
-                        <Box sx={{ display: "none" }} />
+                        <Box sx={{ display: { xs: "none", md: "block" } }} />
                       )}
                     </Grid>
 
@@ -155,16 +157,20 @@ const Experience = () => {
                     </Grid>
 
                     {/* Card for Right Side */}
-                    <Grid item xs={11} md={5}>
+                    <Grid item xs={11} md={5} sx={{ display: "flex", alignItems: "stretch" }}>
                       {index % 2 === 1 ? (
-                        <Box sx={{ pl: 2 }}>
-                          <ExperienceCard experience={exp} />
+                        <Box sx={{ pl: 4, width: "100%" }}>
+                          <Box sx={{ width: "100%" }}>
+                            <ExperienceCard experience={exp} />
+                          </Box>
                         </Box>
                       ) : (
                         // On mobile (xs) we still want to show the card
                         // but hide it on md when it's already rendered on the left.
-                        <Box sx={{ pl: 2, display: { xs: "block", md: "none" } }}>
-                          <ExperienceCard experience={exp} />
+                        <Box sx={{ pl: 4, display: { xs: "block", md: "none" }, width: "100%" }}>
+                          <Box sx={{ width: "100%" }}>
+                            <ExperienceCard experience={exp} />
+                          </Box>
                         </Box>
                       )}
                     </Grid>
