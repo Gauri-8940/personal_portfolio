@@ -167,7 +167,7 @@ const About = () => {
                   >
                     Key Technologies
                   </Typography>
-                  <Stack direction="row" flexWrap="wrap" spacing={1} useFlexGap>
+                  <Stack direction="row" flexWrap="wrap" spacing={1}>
                     {topSkills.map((skill, index) => (
                       <motion.div
                         key={skill}

@@ -112,9 +112,35 @@ const ExperienceCard = ({ experience }) => {
             {experience.description}
           </Typography>
 
+          {/* Key Contributions */}
+          {experience.achievements && experience.achievements.length > 0 && (
+            <Box>
+              <Typography
+                variant="subtitle2"
+                fontWeight={700}
+                sx={{ mt: 2, mb: 1 }}
+              >
+                Key Contributions
+              </Typography>
+              <Stack component="ul" spacing={1} sx={{ pl: 2, m: 0 }}>
+                {experience.achievements.map((item, idx) => (
+                  <Typography
+                    key={`${experience.id}-achievement-${idx}`}
+                    component="li"
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ lineHeight: 1.6, listStyleType: "disc" }}
+                  >
+                    {item}
+                  </Typography>
+                ))}
+              </Stack>
+            </Box>
+          )}
+
           {/* Skills */}
           <Box>
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+            <Stack direction="row" spacing={1} flexWrap="wrap">
               {experience.skills.slice(0, 6).map((skill) => (
                 <Chip
                   key={skill}
