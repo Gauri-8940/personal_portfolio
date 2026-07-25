@@ -97,7 +97,11 @@ const AchievementCard = ({ achievement }) => {
           </Typography>
 
           {/* Description */}
-          <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.5 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ lineHeight: 1.5 }}
+          >
             {achievement.description}
           </Typography>
         </Stack>
