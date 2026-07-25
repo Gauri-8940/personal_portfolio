@@ -161,7 +161,9 @@ const Experience = () => {
                           <ExperienceCard experience={exp} />
                         </Box>
                       ) : (
-                        <Box sx={{ pl: 2 }}>
+                        // On mobile (xs) we still want to show the card
+                        // but hide it on md when it's already rendered on the left.
+                        <Box sx={{ pl: 2, display: { xs: "block", md: "none" } }}>
                           <ExperienceCard experience={exp} />
                         </Box>
                       )}

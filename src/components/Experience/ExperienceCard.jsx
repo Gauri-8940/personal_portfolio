@@ -1,5 +1,5 @@
 import { Card, Box, Typography, Stack, Chip, useTheme } from "@mui/material";
-import { Work, MapPin, Calendar } from "lucide-react";
+import { Briefcase, MapPin, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 
 const ExperienceCard = ({ experience }) => {
@@ -62,7 +62,7 @@ const ExperienceCard = ({ experience }) => {
                 gap: 1,
               }}
             >
-              <Work size={20} style={{ color: "var(--primary-color)" }} />
+              <Briefcase size={20} style={{ color: "var(--primary-color)" }} />
               <Typography variant="h6" fontWeight={700}>
                 {experience.role}
               </Typography>
