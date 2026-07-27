@@ -1,20 +1,12 @@
-import { Box, Container, Typography, Stack, Chip, useTheme } from "@mui/material";
+import { Box, Chip, Container, Grid, Stack, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
+import skillsData from "../../data/skills";
+import SkillCategory from "./SkillCategory";
+
+const featuredStack = ["Java", "Spring Boot", "React.js", "PostgreSQL"];
 
 const Skills = () => {
   const theme = useTheme();
-
-  const skills = [
-    "Java",
-    "Spring Boot",
-    "React.js",
-    "PostgreSQL",
-    "RESTful APIs",
-    "Material UI",
-    "Git",
-    "Axios",
-    "JDBC",
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -63,7 +55,6 @@ const Skills = () => {
                   mb: 2,
                   position: "relative",
                   display: "inline-block",
-
                   "&::after": {
                     content: '""',
                     position: "absolute",
@@ -76,32 +67,49 @@ const Skills = () => {
                   },
                 }}
               >
-                Skills
+                My Technical Skills
               </Typography>
-              <Typography variant="body1" color="text.secondary" sx={{ mt: 3 }}>
-                Technical strengths and tools I rely on to build modern web
-                applications.
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ mt: 2, maxWidth: 760, mx: "auto", lineHeight: 1.7 }}
+              >
+                I enjoy building enterprise applications using modern
+                technologies and continuously learning new tools.
               </Typography>
+
+              <Stack
+                direction="row"
+                spacing={1}
+                flexWrap="wrap"
+                justifyContent="center"
+                sx={{ mt: 3, gap: 1 }}
+              >
+                {featuredStack.map((item) => (
+                  <Chip
+                    key={item}
+                    label={item}
+                    color="primary"
+                    variant="outlined"
+                    sx={{ fontWeight: 600 }}
+                  />
+                ))}
+              </Stack>
             </Box>
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <Stack direction="row" flexWrap="wrap" spacing={2}>
-              {skills.map((skill) => (
-                <Chip
-                  key={skill}
-                  label={skill}
-                  variant="outlined"
-                  color="primary"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                    py: 1,
-                    px: 2,
-                  }}
-                />
+            <Grid container spacing={3}>
+              {skillsData.map((category) => (
+                <Grid item xs={12} md={6} key={category.id}>
+                  <SkillCategory
+                    category={category.category}
+                    description={category.description}
+                    items={category.items}
+                  />
+                </Grid>
               ))}
-            </Stack>
+            </Grid>
           </motion.div>
         </motion.div>
       </Container>

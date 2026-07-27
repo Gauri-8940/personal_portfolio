@@ -1,11 +1,27 @@
+import React, { useState } from "react";
 import { Card, Box, Typography, Stack, useTheme } from "@mui/material";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 
 const AchievementCard = ({ achievement }) => {
   const theme = useTheme();
   const [inView, setInView] = useState(false);
+  const Icon = achievement.icon;
+
+  const renderIcon = (() => {
+    if (!Icon) return null;
+    if (React.isValidElement(Icon)) return Icon;
+    if (typeof Icon === "function") return <Icon size="1em" />;
+    if (typeof Icon === "object") {
+      if (typeof Icon.default === "function") return <Icon.default size="1em" />;
+      const firstComponent = Object.values(Icon).find(
+        (value) => typeof value === "function"
+      );
+      if (firstComponent) return <firstComponent size="1em" />;
+      return String(Icon);
+    }
+    return Icon;
+  })();
 
   // Extract number from value (e.g., "1.4+" -> 1.4)
   const numericValue = parseFloat(achievement.value);
@@ -52,7 +68,7 @@ const AchievementCard = ({ achievement }) => {
               display: "block",
             }}
           >
-            {achievement.icon}
+            {renderIcon}
           </Typography>
 
           {/* Counter Value */}
