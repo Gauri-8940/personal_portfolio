@@ -137,8 +137,7 @@ const Hero = () => {
             <Stack direction="row" spacing={3}>
               <Button
                 startIcon={<GitHub />}
-                href="https://github.com"
-                target="_blank"
+                href="https://github.com/Gauri-8940"
                 sx={{
                   textTransform: "none",
                   color: "text.primary",
@@ -152,8 +151,7 @@ const Hero = () => {
 
               <Button
                 startIcon={<LinkedIn />}
-                href="https://linkedin.com"
-                target="_blank"
+                href="https://www.linkedin.com/in/gaurichavann/"
                 sx={{
                   textTransform: "none",
                   color: "text.primary",

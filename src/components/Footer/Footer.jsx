@@ -52,9 +52,7 @@ const Footer = () => {
             </Typography>
             <Stack direction="row" spacing={1.5}>
               <Link
-                href="https://github.com"
-                target="_blank"
-                rel="noopener"
+                href="https://github.com/Gauri-8940"
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -78,9 +76,7 @@ const Footer = () => {
               </Link>
 
               <Link
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener"
+                href="https://www.linkedin.com/in/gaurichavann/"
                 sx={{
                   display: "flex",
                   alignItems: "center",
