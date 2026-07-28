@@ -1,39 +1,46 @@
-import { Box, Container, Typography, Grid, Card, CardContent, Chip, useTheme, Stack } from "@mui/material";
+import { useMemo, useState } from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  TextField,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  useTheme,
+} from "@mui/material";
+import { Search } from "lucide-react";
 import { motion } from "framer-motion";
-
-const projectData = [
-  {
-    id: 1,
-    title: "SeerAgro",
-    description:
-      "Backend modules for crop, plantation, fertilizer, and pest management using Spring Boot and PostgreSQL.",
-    tech: ["Spring Boot", "PostgreSQL", "Swagger"],
-  },
-  {
-    id: 2,
-    title: "CISAAM",
-    description:
-      "Frontend and backend integration work for client-specific features using React.js and Spring Boot.",
-    tech: ["React.js", "Spring Boot", "Axios"],
-  },
-  {
-    id: 3,
-    title: "QMS",
-    description:
-      "Designed dynamic forms and API integration workflows with React and Spring Boot.",
-    tech: ["React.js", "Spring Boot", "PostgreSQL"],
-  },
-];
+import ProjectCard from "./ProjectCard";
+import ProjectModal from "./ProjectModal";
+import projectData from "../../data/projects";
 
 const Projects = () => {
   const theme = useTheme();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filter, setFilter] = useState("All");
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const filteredProjects = useMemo(() => {
+    return projectData.filter((project) => {
+      const matchesCategory = filter === "All" || project.category === filter;
+      const searchText = searchTerm.toLowerCase();
+      const matchesSearch =
+        project.title.toLowerCase().includes(searchText) ||
+        project.description.toLowerCase().includes(searchText) ||
+        project.tech.some((tech) => tech.toLowerCase().includes(searchText));
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [filter, searchTerm]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.12,
         delayChildren: 0.1,
       },
     },
@@ -75,7 +82,6 @@ const Projects = () => {
                   mb: 2,
                   position: "relative",
                   display: "inline-block",
-
                   "&::after": {
                     content: '""',
                     position: "absolute",
@@ -88,59 +94,86 @@ const Projects = () => {
                   },
                 }}
               >
-                Projects
+                Academic & Professional Projects
               </Typography>
               <Typography variant="body1" color="text.secondary" sx={{ mt: 3 }}>
-                A few professional and academic projects that demonstrate my
-                full stack experience.
+                A curated set of projects that reflect my full stack development
+                journey, research, and practical delivery experience.
               </Typography>
             </Box>
           </motion.div>
 
+          <motion.div variants={itemVariants}>
+            <Stack
+              direction={{ xs: "column", md: "row" }}
+              spacing={2}
+              sx={{
+                mb: 4,
+                alignItems: { xs: "stretch", md: "center" },
+                justifyContent: "space-between",
+              }}
+            >
+              <TextField
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search projects"
+                variant="outlined"
+                size="small"
+                InputProps={{
+                  startAdornment: (
+                    <Search
+                      size={18}
+                      style={{ marginRight: 8, opacity: 0.6 }}
+                    />
+                  ),
+                }}
+                sx={{ minWidth: { xs: "100%", md: 320 } }}
+              />
+
+              <ToggleButtonGroup
+                color="primary"
+                value={filter}
+                exclusive
+                onChange={(_, newFilter) => newFilter && setFilter(newFilter)}
+                aria-label="project filter"
+              >
+                <ToggleButton value="All">All</ToggleButton>
+                <ToggleButton value="Academic">Academic</ToggleButton>
+                <ToggleButton value="Professional">Professional</ToggleButton>
+              </ToggleButtonGroup>
+            </Stack>
+          </motion.div>
+
           <Grid container spacing={4}>
-            {projectData.map((project) => (
-              <Grid item xs={12} md={4} key={project.id}>
+            {filteredProjects.map((project) => (
+              <Grid item xs={12} md={6} key={project.id}>
                 <motion.div variants={itemVariants}>
-                  <Card
-                    sx={{
-                      height: "100%",
-                      background:
-                        theme.palette.mode === "dark"
-                          ? "rgba(30, 41, 59, 0.6)"
-                          : "rgba(248, 250, 252, 0.6)",
-                      backdropFilter: "blur(10px)",
-                      border:
-                        theme.palette.mode === "dark"
-                          ? "1px solid rgba(148, 163, 184, 0.1)"
-                          : "1px solid rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <CardContent>
-                      <Typography variant="h6" fontWeight={700} sx={{ mb: 1 }}>
-                        {project.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        {project.description}
-                      </Typography>
-                      <Stack direction="row" flexWrap="wrap" spacing={1}>
-                        {project.tech.map((tech) => (
-                          <Chip
-                            key={tech}
-                            label={tech}
-                            size="small"
-                            variant="outlined"
-                            color="primary"
-                          />
-                        ))}
-                      </Stack>
-                    </CardContent>
-                  </Card>
+                  <ProjectCard
+                    project={project}
+                    onViewDetails={setSelectedProject}
+                  />
                 </motion.div>
               </Grid>
             ))}
           </Grid>
+
+          {filteredProjects.length === 0 && (
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ mt: 3, textAlign: "center" }}
+            >
+              No projects match your current search or filter.
+            </Typography>
+          )}
         </motion.div>
       </Container>
+
+      <ProjectModal
+        open={Boolean(selectedProject)}
+        onClose={() => setSelectedProject(null)}
+        project={selectedProject}
+      />
     </Box>
   );
 };

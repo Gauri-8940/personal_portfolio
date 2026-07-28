@@ -101,7 +101,7 @@ const Skills = () => {
           <motion.div variants={itemVariants}>
             <Grid container spacing={3}>
               {skillsData.map((category) => (
-                <Grid item xs={12} md={6} key={category.id}>
+                <Grid size={{ xs: 12, md: 6 }} key={category.id}>
                   <SkillCategory
                     category={category.category}
                     description={category.description}
